@@ -1,7 +1,7 @@
 const mongoose =require("mongoose");
 const entrySchema=new mongoose.Schema(
     {
-        data:{
+        date:{
             type:Date,
             required:true
         },
