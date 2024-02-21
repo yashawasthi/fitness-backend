@@ -14,7 +14,7 @@ app.use(cors());
 
 (async function connectDB(){
     try {
-        console.log(process.env.MONGO_URL)
+        // console.log(process.env.MONGO_URL)
         await mongoose.connect(`${process.env.MONGO_URL}`);
         console.log("Connect to MongoDB successfully")
     } catch (error) {
@@ -52,8 +52,8 @@ app.use(cors());
    
     app.post('/saveEntry',async (req, res) => {
        try {
-         console.log(req.body.date )
-         console.log(req.body.weight )
+        //  console.log(req.body.date )
+        //  console.log(req.body.weight )
 
          const { date,weight } = req.body;
          const newEntry=new Entry({date,weight});
@@ -69,7 +69,24 @@ app.use(cors());
          });
        }
      })
-   
+
+
+app.delete('/entries/:id', async (req,res)=>{
+  try {
+    // console.log(req.params.id);
+    const id=req.params.id;
+    const data = await Entry.deleteOne({_id:id});
+    return res.status(200).json({
+      msg: "Ok",
+      data,
+    });
+  }
+   catch (error) {
+    return res.status(500).json({
+      msg: error.message,
+    });
+  }
+ });
       
       
    app.route("/users").get((req, res,next) => {
